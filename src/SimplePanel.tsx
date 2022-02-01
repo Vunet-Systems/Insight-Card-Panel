@@ -15,6 +15,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
 
     for (indexI = 0; indexI < 3; indexI++) {
       maxInt = list[indexI];
+      indices[indexI] = indexI;
       for (indexJ = indexI; indexJ < list.length; indexJ++) {
         if (list[indexJ] > maxInt) {
           maxInt = list[indexJ];
@@ -25,16 +26,18 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         temp = list[indexK];
         list[indexK] = list[indexI];
         list[indexI] = temp;
+        indices[indexI] = indexK;
       }
     }
 
     return [list[0], list[1], list[2]];
   }
 
-  let actualData: any = data.series[0]['fields'][0]['values'];
+  let indices: any = [];
+  let actualData: any = data.series[0]['fields'][1]['values'];
   let topThereeData = topThree(actualData['buffer']);
   let topThreeDataSum: number = topThereeData[0] + topThereeData[1] + topThereeData[2];
-  let topThreeStates: any = data.series[0]['fields'][1]['values'];
+  let topThreeStates: any = data.series[0]['fields'][0]['values'];
 
   const scale = d3
     .scaleLinear()
@@ -55,7 +58,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
             </svg>
           </div>
           <div style={{ width: 30 }}>
-            <h4>{topThreeStates['buffer'][index]}</h4>
+            <h4>{topThreeStates['buffer'][indices[index]]}</h4>
           </div>
           <div>
             <h4 style={{ color: 'lightblue', paddingLeft: 15 }}>{value}%</h4>
