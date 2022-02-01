@@ -34,9 +34,8 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
   let actualData: any = data.series[0]['fields'][0]['values'];
   let topThereeData = topThree(actualData['buffer']);
   let topThreeDataSum: number = topThereeData[0] + topThereeData[1] + topThereeData[2];
-  let topThreeStates = ['MH', 'KL', 'DL'];
+  let topThreeStates: any = data.series[0]['fields'][1]['values'];
 
-  // const theme = useTheme();
   const scale = d3
     .scaleLinear()
     .domain([0, d3.max(topThereeData)])
@@ -56,7 +55,7 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
             </svg>
           </div>
           <div style={{ width: 30 }}>
-            <h4>{topThreeStates[index]}</h4>
+            <h4>{topThreeStates['buffer'][index]}</h4>
           </div>
           <div>
             <h4 style={{ color: 'lightblue', paddingLeft: 15 }}>{value}%</h4>
