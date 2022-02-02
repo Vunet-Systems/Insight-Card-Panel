@@ -12,7 +12,6 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
     let indexJ: number;
     let indexK = 0;
     let maxInt: number = list[0];
-
     for (indexI = 0; indexI < 3; indexI++) {
       maxInt = list[indexI];
       indices[indexI] = indexI;
@@ -29,7 +28,6 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
         indices[indexI] = indexK;
       }
     }
-
     return [list[0], list[1], list[2]];
   }
 
@@ -42,29 +40,37 @@ export const SimplePanel: React.FC<Props> = ({ options, data, width, height }) =
   const scale = d3
     .scaleLinear()
     .domain([0, d3.max(topThereeData)])
-    .range([0, width / 2]);
-  const barHeight = 40;
-  const padding = 30;
+    .range([0, width / 3]);
+  const barHeight = 20;
 
   return (
-    <div style={{ width: width, height: height }}>
-      <h2 style={{ color: 'lightblue' }}>{topThreeDataSum}%</h2>
-      <h4>Top 3 States to Contribute {topThreeDataSum}% percentage of active Covid cases</h4>
-      {topThereeData.map((value: any, index: any) => (
-        <g key={index} className="row">
-          <div>
-            <svg x={20} y={index * barHeight} width={width / 2 + padding} height={barHeight}>
-              <rect key={index} x={20} y={0} width={scale(value)} height={barHeight} fill="blue" />
-            </svg>
-          </div>
-          <div style={{ width: 30 }}>
-            <h4>{topThreeStates['buffer'][indices[index]]}</h4>
-          </div>
-          <div>
-            <h4 style={{ color: 'lightblue', paddingLeft: 15 }}>{value}%</h4>
-          </div>
-        </g>
-      ))}
+    <div
+      style={{
+        width: width,
+        height: height,
+      }}
+    >
+      <h1 style={{ color: 'lightblue' }}>{topThreeDataSum}%</h1>
+      <div style={{ paddingLeft: 25, paddingRight: 25 }}>
+        <h2 style={{ paddingLeft: 15 }}>
+          Top 3 States contribute to {topThreeDataSum}% percentage of active Covid cases.
+        </h2>
+        {topThereeData.map((value: any, index: any) => (
+          <g key={index} className="row">
+            <div>
+              <svg x={25} y={index * barHeight} width={width / 3} height={barHeight}>
+                <rect key={index} x={25} y={0} width={scale(value)} height={barHeight} fill="blue" />
+              </svg>
+            </div>
+            <div>
+              <h4 style={{ paddingLeft: 10, width: 40 }}> {topThreeStates['buffer'][indices[index]]}</h4>
+            </div>
+            <div>
+              <h4 style={{ paddingLeft: 10, color: 'lightblue' }}>{value}%</h4>
+            </div>
+          </g>
+        ))}
+      </div>
     </div>
   );
 };
